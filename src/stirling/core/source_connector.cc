@@ -58,6 +58,10 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
       if (record_batch.records.empty()) {
         continue;
       }
+      string my_type = typeid(records).name();
+      string outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
+      LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);;
+      
       Status s = agent_callback(
           data_table->id(), record_batch.tablet_id,
           std::make_unique<types::ColumnWrapperRecordBatch>(std::move(record_batch.records)));

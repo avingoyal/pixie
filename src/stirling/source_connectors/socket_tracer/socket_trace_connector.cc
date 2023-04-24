@@ -670,10 +670,12 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
 
   constexpr auto kDebugDumpPeriod = std::chrono::minutes(1);
   if (sampling_freq_mgr_.count() % (kDebugDumpPeriod / kSamplingPeriod) == 0) {
-    if (debug_level_ >= 1) {
-      LOG(INFO) << "Context: " << DumpContext(ctx);
-      LOG(INFO) << "BPF map info: " << BPFMapsInfo(static_cast<BCCWrapper*>(this));
-    }
+    LOG(INFO) << "Context: " << DumpContext(ctx);
+    LOG(INFO) << "BPF map info: " << BPFMapsInfo(static_cast<BCCWrapper*>(this));
+    // if (debug_level_ >= 1) {
+    //   LOG(INFO) << "Context: " << DumpContext(ctx);
+    //   LOG(INFO) << "BPF map info: " << BPFMapsInfo(static_cast<BCCWrapper*>(this));
+    // }
   }
 
   std::vector<CIDRBlock> cluster_cidrs = ctx->GetClusterCIDRs();
