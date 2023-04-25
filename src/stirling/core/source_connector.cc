@@ -60,8 +60,8 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
         continue;
       }
       LOG(INFO) << "AVIN_DEBUG__PushData_01";
-      string my_type = typeid(records).name();
-      string outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
+      auto my_type = typeid(record_batch).name();
+      auto outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
       LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
       
       Status s = agent_callback(
