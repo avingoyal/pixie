@@ -60,9 +60,9 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
         continue;
       }
       LOG(INFO) << "AVIN_DEBUG__PushData_01";
-      auto my_type = typeid(record_batch).name();
-      auto outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
-      LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
+      // auto my_type = typeid(record_batch).name();
+      // auto outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
+      // LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
       
       Status s = agent_callback(
           data_table->id(), record_batch.tablet_id,
