@@ -785,6 +785,7 @@ void StirlingImpl::RunCore() {
 
   // Indicates completion of initialization, and start of data collection.
   LOG(INFO) << "Stirling is running.";
+  LOG(INFO) << "AVIN_DEBUG__StirlingImpl::RunCore_01";
 
   // Inside of the main loop below "while (run_enable_)", to minimize syscalls to clock_gettime(),
   // we update the concept of "time now" only when a significant amount of work has been done --
@@ -824,6 +825,7 @@ void StirlingImpl::RunCore() {
       for (auto& source : sources_) {
         // Phase 1: Probe each source for its data.
         if (source->sampling_freq_mgr().Expired(now_plus_run_window)) {
+          LOG(INFO) << "AVIN_DEBUG__StirlingImpl::RunCore_02";
           source->TransferData(ctx.get());
 
           // TransferData() is normally a significant amount of work: update "time now".
@@ -834,6 +836,7 @@ void StirlingImpl::RunCore() {
         // Phase 2: Push Data upstream.
         if (source->push_freq_mgr().Expired(now_plus_run_window) ||
             DataExceedsThreshold(source->data_tables())) {
+          LOG(INFO) << "AVIN_DEBUG__StirlingImpl::RunCore_03";
           source->PushData(data_push_callback_);
 
           // PushData() is normally a significant amount of work: update "time now".

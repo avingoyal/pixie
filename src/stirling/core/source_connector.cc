@@ -48,6 +48,7 @@ void SourceConnector::TransferData(ConnectorContext* ctx) {
   DCHECK(ctx != nullptr);
   DCHECK_EQ(data_tables_.size(), table_schemas().size())
       << "DataTable objects must all be specified.";
+  LOG(INFO) << "AVIN_DEBUG__TransferData_01";
   TransferDataImpl(ctx);
 }
 
@@ -58,9 +59,10 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
       if (record_batch.records.empty()) {
         continue;
       }
+      LOG(INFO) << "AVIN_DEBUG__PushData_01";
       string my_type = typeid(records).name();
       string outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
-      LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);;
+      LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
       
       Status s = agent_callback(
           data_table->id(), record_batch.tablet_id,

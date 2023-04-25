@@ -654,6 +654,8 @@ void SocketTraceConnector::CheckTracerState() {
 void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
   set_iteration_time(now_fn_());
 
+  LOG(INFO) << "AVIN_DEBUG__SocketTraceConnector::TransferDataImpl_01";
+
   UpdateCommonState(ctx);
 
   DataTable* conn_stats_table = data_tables_[kConnStatsTableNum];
@@ -662,12 +664,14 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
     TransferConnStats(ctx, conn_stats_table);
   }
 
+  LOG(INFO) << "AVIN_DEBUG__SocketTraceConnector::TransferDataImpl_02";
   if ((sampling_freq_mgr_.count() + 1) % FLAGS_stirling_socket_tracer_stats_logging_ratio == 0) {
     conn_trackers_mgr_.ComputeProtocolStats();
-    LOG(INFO) << "ConnTracker statistics: " << conn_trackers_mgr_.StatsString();
-    LOG(INFO) << "SocketTracer statistics: " << stats_.Print();
+    LOG(INFO) << "ConnTracker _DEBUG_ statistics: " << conn_trackers_mgr_.StatsString();
+    LOG(INFO) << "SocketTracer _DEBUG_ statistics: " << stats_.Print();
   }
 
+  LOG(INFO) << "Context _DEBUG_: " << DumpContext(ctx);
   constexpr auto kDebugDumpPeriod = std::chrono::minutes(1);
   if (sampling_freq_mgr_.count() % (kDebugDumpPeriod / kSamplingPeriod) == 0) {
     LOG(INFO) << "Context: " << DumpContext(ctx);
@@ -677,6 +681,7 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
     //   LOG(INFO) << "BPF map info: " << BPFMapsInfo(static_cast<BCCWrapper*>(this));
     // }
   }
+  LOG(INFO) << "AVIN_DEBUG__SocketTraceConnector::TransferDataImpl_03";
 
   std::vector<CIDRBlock> cluster_cidrs = ctx->GetClusterCIDRs();
 
@@ -690,6 +695,7 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
       data_table->SetConsumeRecordsCutoffTime(perf_buffer_drain_time_);
     }
   }
+  LOG(INFO) << "AVIN_DEBUG__SocketTraceConnector::TransferDataImpl_04";
 
   for (const auto& conn_tracker : conn_trackers_mgr_.active_trackers()) {
     const auto& transfer_spec = protocol_transfer_specs_[conn_tracker->protocol()];
@@ -725,6 +731,8 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
 
     conn_tracker->IterationPostTick();
   }
+
+  LOG(INFO) << "AVIN_DEBUG__SocketTraceConnector::TransferDataImpl_05";
 
   CheckTracerState();
 
