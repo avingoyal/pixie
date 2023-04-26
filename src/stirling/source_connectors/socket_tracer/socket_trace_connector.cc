@@ -1176,18 +1176,24 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
 
   DataTable::RecordBuilder<&kHTTPTable> r(data_table, resp_message.timestamp_ns);
   r.Append<r.ColIndex("time_")>(resp_message.timestamp_ns);
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--timestamp_ns" << resp_message.timestamp_ns;
   r.Append<r.ColIndex("upid")>(upid.value());
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--upid" << upid.value();
   // Note that there is a string copy here,
   // But std::move is not allowed because we re-use conn object.
   r.Append<r.ColIndex("remote_addr")>(conn_tracker.remote_endpoint().AddrStr());
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--endpoint" << conn_tracker.remote_endpoint().AddrStr();
   r.Append<r.ColIndex("remote_port")>(conn_tracker.remote_endpoint().port());
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--port" << conn_tracker.remote_endpoint().port();
   r.Append<r.ColIndex("trace_role")>(conn_tracker.role());
   r.Append<r.ColIndex("major_version")>(1);
   r.Append<r.ColIndex("minor_version")>(resp_message.minor_version);
   r.Append<r.ColIndex("content_type")>(static_cast<uint64_t>(content_type));
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--port" << static_cast<uint64_t>(content_type);
   r.Append<r.ColIndex("req_headers")>(ToJSONString(req_message.headers), kMaxHTTPHeadersBytes);
   r.Append<r.ColIndex("req_method")>(std::move(req_message.req_method));
   r.Append<r.ColIndex("req_path")>(std::move(req_message.req_path));
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--reqpath" << std::move(req_message.req_path);
   r.Append<r.ColIndex("req_body_size")>(req_message.body_size);
   r.Append<r.ColIndex("req_body")>(std::move(req_message.body), FLAGS_max_body_bytes);
   r.Append<r.ColIndex("resp_headers")>(ToJSONString(resp_message.headers), kMaxHTTPHeadersBytes);

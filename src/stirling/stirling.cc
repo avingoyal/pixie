@@ -785,7 +785,7 @@ void StirlingImpl::RunCore() {
 
   // Indicates completion of initialization, and start of data collection.
   LOG(INFO) << "Stirling is running.";
-  LOG(INFO) << "AVIN_DEBUG__StirlingImpl::RunCore_01";
+  // LOG(INFO) << "AVIN_DEBUG__StirlingImpl::RunCore_01";
 
   // Inside of the main loop below "while (run_enable_)", to minimize syscalls to clock_gettime(),
   // we update the concept of "time now" only when a significant amount of work has been done --
