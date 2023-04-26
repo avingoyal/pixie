@@ -1576,6 +1576,7 @@ void SocketTraceConnector::TransferStream(ConnectorContext* ctx, ConnTracker* tr
   using TFrameType = typename TProtocolTraits::frame_type;
 
   VLOG(3) << absl::StrCat("Connection\n", DebugString<TProtocolTraits>(*tracker, ""));
+  LOG(INFO) << absl::StrCat("AVIN_DEBUG03_Connection - ", DebugString<TProtocolTraits>(*tracker, ""));
 
   // Make sure the tracker's frames containers have been properly initialized.
   // This is a nop if the containers are already of the right type.
