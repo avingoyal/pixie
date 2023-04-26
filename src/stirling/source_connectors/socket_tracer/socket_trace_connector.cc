@@ -1159,12 +1159,18 @@ std::string PXInfoString(const ConnTracker& conn_tracker, const TRecordType& rec
 template <>
 void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracker& conn_tracker,
                                          protocols::http::Record record, DataTable* data_table) {
+
   protocols::http::Message& req_message = record.req;
   protocols::http::Message& resp_message = record.resp;
 
   // Currently decompresses gzip content, but could handle other transformations too.
   // Note that we do this after filtering to avoid burning CPU cycles unnecessarily.
   protocols::http::PreProcessMessage(&resp_message);
+
+  if (true) {
+    LOG(INFO) << "AVIN_DEBUG06__SocketTraceConnector::AppendMessage--req_message.req_path " << req_message.req_path;
+    return;
+  }
 
   md::UPID upid(ctx->GetASID(), conn_tracker.conn_id().upid.pid,
                 conn_tracker.conn_id().upid.start_time_ticks);
