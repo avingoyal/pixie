@@ -1171,10 +1171,10 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
     LOG(INFO) << "AVIN_DEBUG06__SocketTraceConnector::AppendMessage--req_message.req_path " << req_message.req_path;
     if (req_message.req_path != "/healthz") {
       LOG(INFO) << "AVIN_DEBUG06__SocketTraceConnector::AppendMessage-- != ";
+      return;
     }else{
       LOG(INFO) << "AVIN_DEBUG06__SocketTraceConnector::AppendMessage-- ==";
     }
-    return;
   }
 
   md::UPID upid(ctx->GetASID(), conn_tracker.conn_id().upid.pid,
