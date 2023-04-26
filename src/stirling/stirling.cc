@@ -411,7 +411,7 @@ Status StirlingImpl::Init() {
     LOG_IF(WARNING, !s.ok()) << absl::Substitute(
         "Source Connector (registry name=$0) not instantiated, error: $1", name, s.ToString());
   }
-  LOG(INFO) << "Stirling successfully initialized _DEBUG_.";
+  LOG(INFO) << "Stirling successfully initialized _DEBUG_02_.";
   return Status::OK();
 }
 
