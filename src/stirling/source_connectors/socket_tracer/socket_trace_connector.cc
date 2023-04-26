@@ -1174,6 +1174,7 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
     content_type = HTTPContentType::kJSON;
   }
 
+  req_message.headers.insert({ "debug_flag", "debug_flat_value" });
   LOG(INFO) << "AVIN_DEBUG04__SocketTraceConnector::AppendMessage--toString " << req_message.ToString();
 
   DataTable::RecordBuilder<&kHTTPTable> r(data_table, resp_message.timestamp_ns);
