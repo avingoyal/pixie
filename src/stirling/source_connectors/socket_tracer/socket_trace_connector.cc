@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <string>
 #include <utility>
 
 #include <absl/container/flat_hash_map.h>
@@ -1173,6 +1174,8 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
   if (protocols::http::IsJSONContent(resp_message)) {
     content_type = HTTPContentType::kJSON;
   }
+
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--toString " << resp_message.ToString();
 
   DataTable::RecordBuilder<&kHTTPTable> r(data_table, resp_message.timestamp_ns);
   r.Append<r.ColIndex("time_")>(resp_message.timestamp_ns);
