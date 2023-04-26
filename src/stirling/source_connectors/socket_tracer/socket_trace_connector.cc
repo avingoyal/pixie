@@ -672,7 +672,6 @@ void SocketTraceConnector::TransferDataImpl(ConnectorContext* ctx) {
     LOG(INFO) << "SocketTracer _DEBUG_ statistics: " << stats_.Print();
   }
 
-  LOG(INFO) << "Context _DEBUG_: " << DumpContext(ctx);
   constexpr auto kDebugDumpPeriod = std::chrono::minutes(1);
   if (sampling_freq_mgr_.count() % (kDebugDumpPeriod / kSamplingPeriod) == 0) {
     LOG(INFO) << "Context: " << DumpContext(ctx);
@@ -1175,7 +1174,7 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
     content_type = HTTPContentType::kJSON;
   }
 
-  LOG(INFO) << "AVIN_DEBUG04__SocketTraceConnector::AppendMessage--toString " << resp_message.ToString();
+  LOG(INFO) << "AVIN_DEBUG04__SocketTraceConnector::AppendMessage--toString " << req_message.ToString();
 
   DataTable::RecordBuilder<&kHTTPTable> r(data_table, resp_message.timestamp_ns);
   r.Append<r.ColIndex("time_")>(resp_message.timestamp_ns);
@@ -1194,10 +1193,10 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
   r.Append<r.ColIndex("content_type")>(static_cast<uint64_t>(content_type));
   LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--port " << static_cast<uint64_t>(content_type);
   r.Append<r.ColIndex("req_headers")>(ToJSONString(req_message.headers), kMaxHTTPHeadersBytes);
-  r.Append<r.ColIndex("req_method")>(std::move(req_message.req_method));
   LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--req_method " << req_message.req_method;
-  r.Append<r.ColIndex("req_path")>(std::move(req_message.req_path));
+  r.Append<r.ColIndex("req_method")>(std::move(req_message.req_method));
   LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--reqpath " << req_message.req_path;
+  r.Append<r.ColIndex("req_path")>(std::move(req_message.req_path));
   r.Append<r.ColIndex("req_body_size")>(req_message.body_size);
   r.Append<r.ColIndex("req_body")>(std::move(req_message.body), FLAGS_max_body_bytes);
   r.Append<r.ColIndex("resp_headers")>(ToJSONString(resp_message.headers), kMaxHTTPHeadersBytes);

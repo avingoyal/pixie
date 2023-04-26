@@ -64,6 +64,12 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
       // auto outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
       // LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
       
+      auto records = record_batch.records
+      for (auto& record : records) {
+        protocols::http::Message& req_message = record.req;
+        LOG(INFO) << "AVIN_DEBUG05__SocketTraceConnector::AppendMessage--toString " << req_message.ToString();
+      }
+
       Status s = agent_callback(
           data_table->id(), record_batch.tablet_id,
           std::make_unique<types::ColumnWrapperRecordBatch>(std::move(record_batch.records)));
