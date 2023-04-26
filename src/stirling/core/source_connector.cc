@@ -23,6 +23,8 @@
 #include <magic_enum.hpp>
 
 #include "src/stirling/core/source_connector.h"
+#include "src/stirling/source_connectors/socket_tracer/protocols/http/utils.h"
+#include "src/stirling/source_connectors/socket_tracer/protocols/http2/grpc.h"
 
 namespace px {
 namespace stirling {
