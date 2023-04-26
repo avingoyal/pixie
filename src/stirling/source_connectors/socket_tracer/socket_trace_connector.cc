@@ -1169,6 +1169,9 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
 
   if (true) {
     LOG(INFO) << "AVIN_DEBUG06__SocketTraceConnector::AppendMessage--req_message.req_path " << req_message.req_path;
+    if (req_message.req_path != "/healthz") {
+      return;
+    }
     return;
   }
 
