@@ -1175,7 +1175,7 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
     content_type = HTTPContentType::kJSON;
   }
 
-  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--toString " << resp_message.ToString();
+  LOG(INFO) << "AVIN_DEBUG04__SocketTraceConnector::AppendMessage--toString " << resp_message.ToString();
 
   DataTable::RecordBuilder<&kHTTPTable> r(data_table, resp_message.timestamp_ns);
   r.Append<r.ColIndex("time_")>(resp_message.timestamp_ns);
