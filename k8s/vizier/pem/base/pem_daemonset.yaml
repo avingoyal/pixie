@@ -72,6 +72,7 @@ spec:
       containers:
       - name: pem
         image: gcr.io/pixie-oss/pixie-dev/vizier/pem_image:latest
+        imagePullPolicy: Always
         args: []
         env:
         - name: TCMALLOC_SAMPLE_PARAMETER
