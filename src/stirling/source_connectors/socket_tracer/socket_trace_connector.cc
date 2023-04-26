@@ -1193,7 +1193,7 @@ void SocketTraceConnector::AppendMessage(ConnectorContext* ctx, const ConnTracke
   r.Append<r.ColIndex("req_headers")>(ToJSONString(req_message.headers), kMaxHTTPHeadersBytes);
   r.Append<r.ColIndex("req_method")>(std::move(req_message.req_method));
   r.Append<r.ColIndex("req_path")>(std::move(req_message.req_path));
-  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--reqpath" << std::move(req_message.req_path);
+  LOG(INFO) << "AVIN_DEBUG02__SocketTraceConnector::AppendMessage--reqpath" << req_message.req_path;
   r.Append<r.ColIndex("req_body_size")>(req_message.body_size);
   r.Append<r.ColIndex("req_body")>(std::move(req_message.body), FLAGS_max_body_bytes);
   r.Append<r.ColIndex("resp_headers")>(ToJSONString(resp_message.headers), kMaxHTTPHeadersBytes);
