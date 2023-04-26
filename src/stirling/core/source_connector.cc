@@ -23,8 +23,8 @@
 #include <magic_enum.hpp>
 
 #include "src/stirling/core/source_connector.h"
-#include "src/stirling/source_connectors/socket_tracer/protocols/http/utils.h"
-#include "src/stirling/source_connectors/socket_tracer/protocols/http2/grpc.h"
+// #include "src/stirling/source_connectors/socket_tracer/protocols/http/utils.h"
+// #include "src/stirling/source_connectors/socket_tracer/protocols/http2/grpc.h"
 
 namespace px {
 namespace stirling {
@@ -66,11 +66,11 @@ void SourceConnector::PushData(DataPushCallback agent_callback) {
       // auto outputToPrint = ("echo " + my_type + " | c++filt -t").c_str();
       // LOG(FATAL) << absl::Substitute("AVIN_DEBUG_ = $0", outputToPrint);
       
-      auto records = record_batch.records;
-      for (auto& record : records) {
-        protocols::http::Message& req_message = record.req;
-        LOG(INFO) << "AVIN_DEBUG05__SocketTraceConnector::AppendMessage--toString " << req_message.ToString();
-      }
+      // auto records = record_batch.records;
+      // for (auto& record : records) {
+      //   protocols::http::Message& req_message = record.req;
+      //   LOG(INFO) << "AVIN_DEBUG05__SocketTraceConnector::AppendMessage--toString " << req_message.ToString();
+      // }
 
       Status s = agent_callback(
           data_table->id(), record_batch.tablet_id,
